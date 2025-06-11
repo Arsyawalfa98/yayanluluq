@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" as="style" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" /></noscript>
+  
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -37,7 +38,7 @@
     }
 
     /* ===== TYPOGRAPHY ===== */
-    h1, h2, h3, #slide1 .name-text, #slide1 .name-and, #slide2 h3 {
+    h1, h2, h3, .cursive-text {
       font-family: "Great Vibes", cursive !important;
       margin-top: 0;
       margin-bottom: 0.5em;
@@ -47,7 +48,7 @@
       will-change: transform, text-shadow;
     }
 
-    h1:hover, h2:hover, h3:hover {
+    h1:hover, h2:hover, h3:hover, .cursive-text:hover {
       text-shadow: 0 3px 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.6);
       transform: scale(1.03);
     }
@@ -137,8 +138,6 @@
       outline: none;
     }
 
-    #landing-page button:active { transform: translateY(0) scale(0.98); }
-
     #guest-name {
       margin-top: 1.2rem;
       font-size: 20px;
@@ -161,8 +160,6 @@
       text-align: center;
       color: white;
     }
-
-    #guest-name:hover { letter-spacing: 0.045em; }
 
     /* ===== SLIDER SYSTEM ===== */
     #slider {
@@ -266,7 +263,7 @@
 
     #slide1.overlay-visible .names-container { opacity: 1; }
 
-    #slide1 .name-text {
+    #slide1 .name-text, #slide1 .name-and {
       font-size: clamp(1.7rem, 6vw, 2.5rem);
       letter-spacing: 0.08em;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
@@ -277,15 +274,9 @@
       will-change: transform, text-shadow;
     }
 
-    #slide1 .name-text:hover {
-      text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.9);
-      transform: scale(1.05);
-    }
-
     #slide1 .name-and {
       font-size: clamp(1.5rem, 5vw, 2.2rem);
       margin: 0.1rem 0;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
     }
 
     #slide1 p {
@@ -412,13 +403,6 @@
 
     #slide2.left-content-visible .left .info-text, #slide2.right-content-visible .right .info-text { opacity: 1; transform: translateY(0); }
 
-    #slide2 .left .info-text:nth-child(2) { transition-delay: 0.5s; }
-    #slide2 .left .info-text:nth-child(3) { transition-delay: 0.7s; }
-    #slide2 .left .info-text:nth-child(4) { transition-delay: 0.9s; }
-    #slide2 .right .info-text:nth-child(2) { transition-delay: 0.5s; }
-    #slide2 .right .info-text:nth-child(3) { transition-delay: 0.7s; }
-    #slide2 .right .info-text:nth-child(4) { transition-delay: 0.9s; }
-
     #slide2 p {
       margin: 12px 0;
       letter-spacing: 0.02em;
@@ -453,30 +437,30 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 50%; /* Tambah tinggi untuk menampung konten */
+      height: 50%;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0) 100%);
       color: white;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      padding: 1rem 1.5rem; /* Kurangi padding */
+      padding: 1rem 1.5rem;
       text-align: center;
       user-select: none;
       backdrop-filter: blur(4px);
       transition: opacity 0.6s ease, transform 0.6s ease;
       transform: translateY(20px);
       opacity: 0;
-      overflow: hidden; /* Hilangkan scroll */
+      overflow: hidden;
       -webkit-overflow-scrolling: touch;
     }
 
     #slide3.active .overlay { transform: translateY(0); opacity: 1; }
 
     #slide3 h3 {
-      font-size: clamp(1.2rem, 6vw, 2.2rem); /* Kurangi ukuran font */
+      font-size: clamp(1.2rem, 6vw, 2.2rem);
       margin-top: 0;
-      margin-bottom: 0.3em; /* Kurangi margin */
+      margin-bottom: 0.3em;
       letter-spacing: 0.05em;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.5);
       position: relative;
@@ -485,7 +469,7 @@
     #slide3 h3:after {
       content: "";
       position: absolute;
-      bottom: -4px; /* Kurangi jarak */
+      bottom: -4px;
       left: 15%;
       width: 70%;
       height: 1px;
@@ -496,59 +480,51 @@
     #slide3 .events-container {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start; /* Ubah ke flex-start */
+      justify-content: flex-start;
       align-items: center;
       width: 100%;
-      margin-top: 0.4rem; /* Kurangi margin */
-      gap: 0.2rem; /* Kurangi gap */
-      flex: 1; /* Gunakan sisa ruang yang ada */
-      max-height: 100%; /* Batasi tinggi maksimal */
+      margin-top: 0.4rem;
+      gap: 0.2rem;
+      flex: 1;
+      max-height: 100%;
     }
 
     #slide3 .event-section {
       width: 100%;
-      margin: 0.1rem 0; /* Kurangi margin */
+      margin: 0.1rem 0;
       opacity: 0;
       transform: translateY(15px);
       transition: all 0.5s ease;
     }
 
     #slide3.active .event-section { opacity: 1; transform: translateY(0); }
-    #slide3.active .event-section:nth-child(1) { transition-delay: 0.3s; }
-    #slide3.active .event-section:nth-child(3) { transition-delay: 0.6s; }
-    #slide3.active .event-section:nth-child(4) { transition-delay: 0.8s; }
 
     #slide3 .event-title {
       font-family: "Great Vibes", cursive !important;
-      font-size: clamp(1.1rem, 4.5vw, 1.6rem); /* Kurangi ukuran font */
-      margin: 0.1em 0; /* Kurangi margin */
+      font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+      margin: 0.1em 0;
       letter-spacing: 0.03em;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 255, 255, 0.4);
     }
 
     #slide3 .event-section p {
-      margin: 0.1em 0; /* Kurangi margin */
+      margin: 0.1em 0;
       font-weight: 500;
-      font-size: clamp(0.7rem, 2.2vw, 0.85rem); /* Kurangi ukuran font */
+      font-size: clamp(0.7rem, 2.2vw, 0.85rem);
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-      line-height: 1.2; /* Kurangi line height */
+      line-height: 1.2;
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.4s ease;
     }
 
     #slide3.active .event-section p { opacity: 1; transform: translateY(0); }
-    #slide3.active .event-section:nth-child(1) p:nth-child(2) { transition-delay: 0.4s; }
-    #slide3.active .event-section:nth-child(1) p:nth-child(3) { transition-delay: 0.5s; }
-    #slide3.active .event-section:nth-child(3) p:nth-child(2) { transition-delay: 0.7s; }
-    #slide3.active .event-section:nth-child(3) p:nth-child(3) { transition-delay: 0.8s; }
-    #slide3.active .event-section:nth-child(4) p { transition-delay: 0.9s; }
 
     #slide3 .event-divider {
-      width: 40%; /* Kurangi lebar */
+      width: 40%;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-      margin: 0.2rem 0; /* Kurangi margin */
+      margin: 0.2rem 0;
       box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
       opacity: 0;
       transform: scaleX(0.7);
@@ -668,7 +644,7 @@
 
     #slide4 .comment-section {
       padding: 0 1rem 2rem;
-      max-width: 800px; /* Diperlebar dari 600px ke 800px */
+      max-width: 800px;
       margin: 0 auto;
       opacity: 0;
       transform: translateY(20px);
@@ -754,8 +730,6 @@
       box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
     }
 
-    #slide4 .submit-btn:active { transform: translateY(0); }
-
     #slide4 .comments-list {
       max-height: 300px;
       overflow-y: auto;
@@ -804,6 +778,44 @@
       padding: 2rem;
     }
 
+    .pagination-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .pagination-controls.visible { opacity: 1; }
+
+    .pagination-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      min-width: 80px;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .pagination-info {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+    }
+
     /* ===== NAVIGATION & CONTROLS ===== */
     .nav-button {
       position: fixed;
@@ -837,8 +849,6 @@
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
       opacity: 0.95;
     }
-
-    .nav-button:active { transform: translateY(-50%) scale(0.95); }
 
     #prev { left: 15px; }
     #next { right: 15px; }
@@ -878,8 +888,6 @@
       opacity: 0.9;
     }
 
-    #music-control:active { transform: scale(0.95); }
-
     #music-control svg {
       fill: currentColor;
       width: 24px;
@@ -899,8 +907,9 @@
 
     /* ===== RESPONSIVE DESIGN ===== */
     @media (hover: none) {
-      #slide1 .name-text:hover, #slide1 .name-and:hover, #slide2 p:hover, h1:hover, h2:hover, h3:hover { transform: none; text-shadow: none; }
-      #slide2 p:hover { padding-left: 0; }
+      h1:hover, h2:hover, h3:hover, .cursive-text:hover,
+      #slide1 .name-text:hover, #slide1 .name-and:hover,
+      #slide2 p:hover { transform: none; text-shadow: none; padding-left: 0; }
       #slide2 p:hover:after { width: 0; }
     }
 
@@ -911,18 +920,9 @@
       #slide1 .overlay { padding-top: min(4rem, 10vh); }
       #slide2 .info-container { padding: 1rem 0.5rem; }
       #slide2 h3 { margin-bottom: 1rem; }
-      #slide2 .parents-info { margin-top: 0.5rem; }
-      #slide3 .overlay { height: 55%; padding: 1rem 1rem; }
-      #slide3 h3 { margin-bottom: 0.4em; font-size: clamp(1.1rem, 5.5vw, 2rem); }
-      #slide3 .events-container { margin-top: 0.3rem; gap: 0.15rem; }
-      #slide3 .event-section { margin: 0.05rem 0; }
-      #slide3 .event-title { font-size: clamp(1rem, 4vw, 1.4rem); margin: 0.05em 0; }
-      #slide3 .event-section p { margin: 0.05em 0; font-size: clamp(0.65rem, 2vw, 0.8rem); }
-      #slide3 .event-divider { width: 35%; margin: 0.15rem 0; }
-      #slide4 .photo-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.6rem; padding: 0 0.8rem; }
-      #slide4 .gallery-header { padding: 1.5rem 0.8rem 0.8rem; }
-      #slide4 .comment-section { padding: 0 1.5rem 1.5rem; max-width: 92%; } /* Sesuaikan untuk tablet */
-      #slide4 .comment-form { padding: 1.5rem; }
+      #slide3 .overlay { height: 55%; padding: 1rem; }
+      #slide4 .photo-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.6rem; }
+      #slide4 .comment-section { max-width: 92%; }
       #prev { left: 10px; }
       #next { right: 10px; }
     }
@@ -931,71 +931,36 @@
     @media screen and (max-width: 480px) {
       .slide { padding: 1rem; }
       .guest-name-text { font-size: 20px; }
-      #slide1 .names-container { top: 40%; transition: all 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s; }
-      #landing-page h1 { margin-bottom: 1rem; }
-      #landing-page button { padding: 0.6rem 1.8rem; }
-      #slide1 .center-container { margin-bottom: min(3rem, 15vh); }
+      #slide1 .names-container { top: 40%; }
       #slide2.left-panel-visible .panel-left, #slide2.right-panel-visible .panel-right { width: 50%; z-index: 5; }
       #slide3 .overlay { height: 50%; padding: 0.8rem 0.6rem; }
-      #slide3 h3 { margin-bottom: 0.2em; font-size: clamp(1rem, 5vw, 1.6rem); }
-      #slide3 .events-container { margin-top: 0.2rem; gap: 0.1rem; }
-      #slide3 .event-section { margin: 0.05rem 0; }
-      #slide3 .event-title { font-size: clamp(0.9rem, 4vw, 1.2rem); margin: 0.05em 0; }
-      #slide3 .event-section p { margin: 0.05em 0; font-size: clamp(0.6rem, 1.8vw, 0.75rem); line-height: 1.1; }
-      #slide3 .event-divider { width: 30%; margin: 0.1rem 0; }
-      #slide4 .photo-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; padding: 0 0.6rem; }
-      #slide4 .gallery-header { padding: 1rem 0.6rem 0.6rem; }
-      #slide4 .comment-section { padding: 0 1rem 1rem; max-width: 90%; } /* Sesuaikan untuk mobile */
-      #slide4 .comment-form { padding: 1.2rem; }
-      #slide4 .form-group input, #slide4 .form-group textarea { padding: 0.6rem; font-size: 0.85rem; }
-      #slide4 .close-modal { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 1.5rem; }
-      #slide4 .pagination-btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; min-width: 70px; }
-      #music-control { bottom: 1rem; right: 1rem; width: 36px; height: 36px; padding: 0.4rem; }
+      #slide4 .photo-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; }
+      #slide4 .comment-section { max-width: 90%; }
+      #music-control { bottom: 1rem; right: 1rem; width: 36px; height: 36px; }
+      .pagination-btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; min-width: 70px; }
     }
 
     /* Small Mobile */
     @media screen and (max-width: 360px) {
-      #landing-page button { padding: 0.5rem 1.5rem; }
-      .guest-name-text { font-size: 25px; }
-      #slide2 .center-divider { height: 70%; }
-      #slide2 h3 { font-size: clamp(1rem, 4vw, 1.8rem); margin-bottom: 0.8rem; }
-      #slide2 .parent-label, #slide2 .parent-name { font-size: clamp(0.7rem, 2.2vw, 0.9rem); }
       #slide3 .overlay { height: 60%; padding: 0.6rem 0.4rem; }
-      #slide3 h3 { font-size: clamp(0.9rem, 4.5vw, 1.2rem); margin-bottom: 0.1em; }
-      #slide3 .events-container { margin-top: 0.1rem; gap: 0.05rem; }
-      #slide3 .event-title { font-size: clamp(0.8rem, 3.5vw, 1rem); margin: 0.02em 0; }
-      #slide3 .event-section p { font-size: clamp(0.55rem, 1.5vw, 0.65rem); line-height: 1.1; margin: 0.02em 0; }
-      #slide3 .event-divider { width: 25%; margin: 0.05rem 0; }
-      #slide4 .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; padding: 0 0.5rem; }
-      #slide4 .gallery-header { padding: 0.8rem 0.5rem 0.5rem; }
-      #slide4 h3 { font-size: clamp(1.4rem, 6vw, 2rem); }
-      #slide4 .comment-section { padding: 0 0.8rem 0.8rem; max-width: 95%; } /* Hampir full width untuk small mobile */
-      #slide4 .comment-form { padding: 1rem; }
-      #slide4 .comment-header h4 { font-size: clamp(1.2rem, 4vw, 1.6rem); }
-      #slide4 .pagination-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; min-width: 60px; }
-      #slide4 .pagination-info { font-size: 0.75rem; }
+      #slide4 .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+      #slide4 .comment-section { max-width: 95%; }
+      .pagination-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; min-width: 60px; }
     }
 
     /* Landscape */
     @media screen and (max-height: 480px) and (orientation: landscape) {
       #slide1 .center-container { margin-bottom: 0.5rem; }
       #slide2 .panel-left, #slide2 .panel-right { top: 5%; bottom: 5%; }
-      #slide2 .info-container { padding: 0.5rem; }
-      #slide2 h3 { margin-bottom: 0.5rem; }
-      #slide2 .parents-info { gap: 0.2rem; }
-      #slide3 .overlay { height: 65%; padding: 0.7rem 0.8rem; }
-      #slide3 h3 { font-size: clamp(1rem, 4.5vw, 1.4rem); margin-bottom: 0.1em; }
-      #slide3 .events-container { margin-top: 0.1rem; flex-direction: row; justify-content: center; align-items: flex-start; gap: 0.5rem; }
-      #slide3 .event-section { width: 45%; margin: 0; }
-      #slide3 .event-divider { width: 1px; height: 60px; margin: 0; background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), transparent); }
-      #slide3 .event-title { font-size: clamp(0.9rem, 3vw, 1.2rem); margin: 0.1em 0; }
-      #slide3 .event-section p { font-size: clamp(0.65rem, 1.8vw, 0.75rem); margin: 0.1em 0; }
+      #slide3 .overlay { height: 65%; }
+      #slide3 .events-container { flex-direction: row; justify-content: center; gap: 0.5rem; }
+      #slide3 .event-section { width: 45%; }
+      #slide3 .event-divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), transparent); }
     }
 
     /* Safari Fixes */
     @supports (-webkit-touch-callout: none) {
       .slide { transition: transform 1s ease-out, opacity 1s ease-out !important; }
-      #slide2 p:after { transform: translateZ(0); }
     }
   </style>
 </head>
@@ -1010,22 +975,22 @@
 
   <!-- Slider -->
   <div id="slider">
-    <!-- Slide 1: Sambutan -->
+    <!-- ===== SLIDE 1: SAMBUTAN ===== -->
     <div id="slide1" class="slide">
       <div class="overlay">
         <div class="center-container">
           <img src="tempat_nama.gif" alt="" class="gif" />
           <div class="names-container">
-            <div class="name-text">Yayan</div>
-            <div class="name-and">&</div>
-            <div class="name-text">Luluq</div>
+            <div class="name-text cursive-text">Yayan</div>
+            <div class="name-and cursive-text">&</div>
+            <div class="name-text cursive-text">Luluq</div>
           </div>
         </div>
         <p>Dengan memohon Rahmat dan Ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami</p>
       </div>
     </div>
 
-    <!-- Slide 2: Mempelai -->
+    <!-- ===== SLIDE 2: MEMPELAI ===== -->
     <div id="slide2" class="slide">
       <div class="main-container">
         <div class="panel-left left">
@@ -1054,7 +1019,7 @@
       </div>
     </div>
 
-    <!-- Slide 3: Acara -->
+    <!-- ===== SLIDE 3: ACARA ===== -->
     <div id="slide3" class="slide">
       <div class="overlay">
         <h3>Rangkaian Acara</h3>
@@ -1080,7 +1045,7 @@
       </div>
     </div>
 
-    <!-- Slide 4: Galeri Foto & Komentar -->
+    <!-- ===== SLIDE 4: GALERI & KOMENTAR ===== -->
     <div id="slide4" class="slide">
       <div class="gallery-container">
         <div class="gallery-header">
@@ -1111,7 +1076,7 @@
           <!-- Pagination Controls -->
           <div class="pagination-controls" id="pagination-controls">
             <button class="pagination-btn" id="prev-page">←</button>
-            <span class="pagination-info" id="pagination-info" style="font-size: 13px; text-align: center;">Halaman 1 dari 1</span>
+            <span class="pagination-info" id="pagination-info">Halaman 1 dari 1</span>
             <button class="pagination-btn" id="next-page">→</button>
           </div>
         </div>
@@ -1139,91 +1104,139 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Firebase Configuration - GANTI DENGAN CONFIG ANDA
-      const firebaseConfig = {
-        apiKey: "GANTI_DENGAN_API_KEY_ANDA",
-        authDomain: "GANTI_DENGAN_AUTH_DOMAIN_ANDA",
-        databaseURL: "https://undangan-723eb-default-rtdb.asia-southeast1.firebasedatabase.app/", // Sesuai dengan screenshot Anda
-        projectId: "GANTI_DENGAN_PROJECT_ID_ANDA",
-        storageBucket: "GANTI_DENGAN_STORAGE_BUCKET_ANDA",
-        messagingSenderId: "GANTI_DENGAN_MESSAGING_SENDER_ID_ANDA",
-        appId: "GANTI_DENGAN_APP_ID_ANDA"
-      };
+    // ===== FIREBASE CONFIGURATION =====
+    const firebaseConfig = {
+      apiKey: "GANTI_DENGAN_API_KEY_ANDA",
+      authDomain: "GANTI_DENGAN_AUTH_DOMAIN_ANDA", 
+      databaseURL: "https://undangan-723eb-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      projectId: "GANTI_DENGAN_PROJECT_ID_ANDA",
+      storageBucket: "GANTI_DENGAN_STORAGE_BUCKET_ANDA",
+      messagingSenderId: "GANTI_DENGAN_MESSAGING_SENDER_ID_ANDA",
+      appId: "GANTI_DENGAN_APP_ID_ANDA"
+    };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const database = firebase.database();
-      // Elements
-      const landingPage = document.getElementById("landing-page");
-      const slider = document.getElementById("slider");
-      const openButton = document.getElementById("open-invitation");
-      const slides = document.querySelectorAll(".slide");
-      const prevButton = document.getElementById("prev");
-      const nextButton = document.getElementById("next");
-      const musicControl = document.getElementById("music-control");
-      const music = document.getElementById("background-music");
-      
-      // Galeri dan komentar elements
-      const photoGrid = document.getElementById("photo-grid");
-      const photoModal = document.getElementById("photo-modal");
-      const modalImage = document.getElementById("modal-image");
-      const closeModal = document.getElementById("close-modal");
-      const commentForm = document.getElementById("comment-form");
-      const commentsList = document.getElementById("comments-list");
-      const emptyComments = document.getElementById("empty-comments");
-      const paginationControls = document.getElementById("pagination-controls");
-      const prevPageBtn = document.getElementById("prev-page");
-      const nextPageBtn = document.getElementById("next-page");
-      const paginationInfo = document.getElementById("pagination-info");
+    // ===== MAIN APPLICATION =====
+    class WeddingInvitation {
+      constructor() {
+        this.initializeElements();
+        this.initializeState();
+        this.initializeFirebase();
+        this.initializeEventListeners();
+        this.initializeGallery();
+        this.initializeComments();
+        this.handleURLParameters();
+        this.createFlowerPetals();
+        this.preloadImages();
+      }
 
-      // State variables
-      let currentSlide = 0;
-      let isTransitioning = false;
-      let touchStartX = 0;
-      let touchEndX = 0;
-      let comments = [];
-      let autoSlideInterval;
-      let autoSlideEnabled = true;
-      
-      // Pagination variables
-      let currentPage = 1;
-      let commentsPerPage = 2;
-      let totalPages = 1;
+      // ===== INITIALIZATION METHODS =====
+      initializeElements() {
+        // Landing page elements
+        this.landingPage = document.getElementById("landing-page");
+        this.slider = document.getElementById("slider");
+        this.openButton = document.getElementById("open-invitation");
+        
+        // Slide elements
+        this.slides = document.querySelectorAll(".slide");
+        this.prevButton = document.getElementById("prev");
+        this.nextButton = document.getElementById("next");
+        
+        // Music elements
+        this.musicControl = document.getElementById("music-control");
+        this.music = document.getElementById("background-music");
+        
+        // Gallery elements
+        this.photoGrid = document.getElementById("photo-grid");
+        this.photoModal = document.getElementById("photo-modal");
+        this.modalImage = document.getElementById("modal-image");
+        this.closeModal = document.getElementById("close-modal");
+        
+        // Comment elements
+        this.commentForm = document.getElementById("comment-form");
+        this.commentsList = document.getElementById("comments-list");
+        this.emptyComments = document.getElementById("empty-comments");
+        this.paginationControls = document.getElementById("pagination-controls");
+        this.prevPageBtn = document.getElementById("prev-page");
+        this.nextPageBtn = document.getElementById("next-page");
+        this.paginationInfo = document.getElementById("pagination-info");
+      }
 
-      // Gallery photos
-      const galleryPhotos = [
-        "galeri1.jpg",
-        "galeri2.jpg", 
-        "galeri3.jpg",
-        "galeri4.jpg",
-        "galeri5.jpg",
-        "galeri6.jpg",
-        "galeri7.jpg"
-      ];
+      initializeState() {
+        this.currentSlide = 0;
+        this.isTransitioning = false;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.comments = [];
+        this.autoSlideInterval = null;
+        this.autoSlideEnabled = true;
+        this.currentPage = 1;
+        this.commentsPerPage = 2;
+        this.totalPages = 1;
+        
+        this.galleryPhotos = [
+          "galeri1.jpg", "galeri2.jpg", "galeri3.jpg", "galeri4.jpg",
+          "galeri5.jpg", "galeri6.jpg", "galeri7.jpg"
+        ];
+        
+        this.slideBackgrounds = [
+          "background_0.jpg", "background_1_ganti.jpg",
+          "background_2_ganti.JPG", "background_3_ganti.JPG"
+        ];
+      }
 
-      // Slide backgrounds
-      const slideBackgrounds = [
-        "background_0.jpg",
-        "background_1_ganti.jpg",
-        "background_2_ganti.JPG",
-        "background_3_ganti.JPG",
-      ];
+      initializeFirebase() {
+        firebase.initializeApp(firebaseConfig);
+        this.database = firebase.database();
+      }
 
-      // Apply backgrounds (slide 4 tidak pakai background image)
-      slides.forEach((slide, index) => {
-        if (slideBackgrounds[index] && slide.id !== 'slide4') {
-          slide.style.backgroundImage = `url(${slideBackgrounds[index]})`;
-        } else if (slide.id === 'slide4') {
-          slide.style.background = 'black'; // Background hitam polos untuk slide 4
-        }
-      });
+      initializeEventListeners() {
+        // Landing page
+        this.openButton.addEventListener("click", () => this.openInvitation());
+        
+        // Navigation
+        this.prevButton.addEventListener("click", () => this.showSlide(this.currentSlide - 1));
+        this.nextButton.addEventListener("click", () => this.showSlide(this.currentSlide + 1));
+        
+        // Music control
+        this.musicControl.addEventListener("click", () => this.toggleMusic());
+        
+        // Photo modal
+        this.closeModal.addEventListener("click", () => this.closePhotoModal());
+        this.photoModal.addEventListener("click", (e) => {
+          if (e.target === this.photoModal) this.closePhotoModal();
+        });
+        
+        // Comment form
+        this.commentForm.addEventListener("submit", (e) => this.handleCommentSubmit(e));
+        
+        // Pagination
+        this.prevPageBtn.addEventListener("click", () => this.goToPage(this.currentPage - 1));
+        this.nextPageBtn.addEventListener("click", () => this.goToPage(this.currentPage + 1));
+        
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => this.handleKeyDown(e));
+        
+        // Touch navigation
+        this.slider.addEventListener("touchstart", (e) => this.handleTouchStart(e), { passive: true });
+        this.slider.addEventListener("touchend", (e) => this.handleTouchEnd(e), { passive: true });
+        
+        // Window events
+        window.addEventListener('resize', () => this.handleResize());
+        window.addEventListener("orientationchange", () => this.handleOrientationChange());
+        document.addEventListener("visibilitychange", () => this.handleVisibilityChange());
+        window.addEventListener("popstate", (e) => this.handlePopState(e));
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        
+        // Lazy load audio
+        window.addEventListener("load", () => {
+          setTimeout(() => this.music.load(), 1000);
+        });
+      }
 
-      // Flower petals animation
-      function createFlowerPetals(count = 12) {
+      // ===== SLIDE 1: SAMBUTAN METHODS =====
+      createFlowerPetals(count = 12) {
         const colors = ["#ffb3ba", "#ffdfba", "#ffffba", "#baffc9", "#bae1ff"];
-        const container = landingPage;
-
+        
         for (let i = 0; i < count; i++) {
           const petal = document.createElement("div");
           petal.className = "flower-petal";
@@ -1235,177 +1248,183 @@
           petal.style.setProperty("--translateX", `${Math.random() * 200 - 100}px`);
           petal.style.setProperty("--translateY", `${Math.random() * 100 + 50}px`);
           petal.style.setProperty("--rotate", `${Math.random() * 360}deg`);
-          container.appendChild(petal);
+          this.landingPage.appendChild(petal);
 
           setTimeout(() => {
             petal.style.animation = `floatPetal ${Math.random() * 3 + 4}s ease-in-out forwards`;
             petal.addEventListener("animationend", () => {
               petal.remove();
-              if (landingPage.style.display !== "none") {
-                createFlowerPetals(1);
+              if (this.landingPage.style.display !== "none") {
+                this.createFlowerPetals(1);
               }
             });
           }, Math.random() * 2000);
         }
       }
 
-      // Initialize gallery
-      function initGallery() {
-        photoGrid.innerHTML = '';
-        galleryPhotos.forEach((photoUrl, index) => {
+      // ===== SLIDE 2: MEMPELAI METHODS =====
+      applySlideBackgrounds() {
+        this.slides.forEach((slide, index) => {
+          if (this.slideBackgrounds[index] && slide.id !== 'slide4') {
+            slide.style.backgroundImage = `url(${this.slideBackgrounds[index]})`;
+          } else if (slide.id === 'slide4') {
+            slide.style.background = 'black';
+          }
+        });
+      }
+
+      // ===== SLIDE 3: ACARA METHODS =====
+      // Event-specific methods can be added here if needed
+
+      // ===== SLIDE 4: GALERI & KOMENTAR METHODS =====
+      initializeGallery() {
+        this.photoGrid.innerHTML = '';
+        this.galleryPhotos.forEach((photoUrl, index) => {
           const photoItem = document.createElement('div');
           photoItem.className = 'photo-item';
           photoItem.innerHTML = `<img src="${photoUrl}" alt="Foto wedding ${index + 1}" loading="lazy">`;
-          photoItem.addEventListener('click', () => openPhotoModal(photoUrl));
-          photoGrid.appendChild(photoItem);
+          photoItem.addEventListener('click', () => this.openPhotoModal(photoUrl));
+          this.photoGrid.appendChild(photoItem);
         });
       }
 
-      // Photo modal functions
-      function openPhotoModal(photoUrl) {
-        modalImage.src = photoUrl;
-        photoModal.classList.add('active');
+      openPhotoModal(photoUrl) {
+        this.modalImage.src = photoUrl;
+        this.photoModal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
 
-      function closePhotoModal() {
-        photoModal.classList.remove('active');
+      closePhotoModal() {
+        this.photoModal.classList.remove('active');
         document.body.style.overflow = '';
       }
 
-      // Modal event listeners
-      closeModal.addEventListener('click', closePhotoModal);
-      photoModal.addEventListener('click', (e) => {
-        if (e.target === photoModal) {
-          closePhotoModal();
-        }
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && photoModal.classList.contains('active')) {
-          closePhotoModal();
-        }
-      });
-
-      // Comments system dengan Firebase
-      function initComments() {
-        // Load komentar dari Firebase
-        loadCommentsFromFirebase();
+      initializeComments() {
+        this.loadCommentsFromFirebase();
       }
 
-      function loadCommentsFromFirebase() {
-        const commentsRef = database.ref('comments');
+      loadCommentsFromFirebase() {
+        const commentsRef = this.database.ref('comments');
         
-        // Listen untuk perubahan data real-time
         commentsRef.on('value', (snapshot) => {
-          comments = [];
+          this.comments = [];
           if (snapshot.exists()) {
             const data = snapshot.val();
-            // Convert Firebase object ke array dan urutkan berdasarkan timestamp
             Object.keys(data).forEach(key => {
-              comments.push({
-                id: key,
-                ...data[key]
-              });
+              this.comments.push({ id: key, ...data[key] });
             });
-            
-            // Urutkan komentar terbaru di atas
-            comments.sort((a, b) => b.timestamp - a.timestamp);
+            this.comments.sort((a, b) => b.timestamp - a.timestamp);
           }
-          renderComments();
+          this.renderComments();
         });
       }
 
-      function saveCommentToFirebase(commentData) {
-        const commentsRef = database.ref('comments');
-        
-        // Push komentar baru ke Firebase
+      saveCommentToFirebase(commentData) {
+        const commentsRef = this.database.ref('comments');
         return commentsRef.push(commentData)
-          .then(() => {
-            console.log('Komentar berhasil disimpan ke Firebase');
-          })
+          .then(() => console.log('Komentar berhasil disimpan'))
           .catch((error) => {
             console.error('Error menyimpan komentar:', error);
             alert('Gagal menyimpan komentar. Silakan coba lagi.');
           });
       }
 
-      function saveComments() {
-        // Tidak perlu lagi karena menggunakan Firebase
-        // Function ini tetap ada untuk kompatibilitas
-      }
-
-      function renderComments() {
-        if (comments.length === 0) {
-          commentsList.innerHTML = '<div class="empty-comments">Belum ada ucapan. Jadilah yang pertama memberikan ucapan!</div>';
-          paginationControls.classList.remove('visible');
+      renderComments() {
+        if (this.comments.length === 0) {
+          this.commentsList.innerHTML = '<div class="empty-comments">Belum ada ucapan. Jadilah yang pertama memberikan ucapan!</div>';
+          this.paginationControls.classList.remove('visible');
           return;
         }
 
-        // Calculate pagination
-        totalPages = Math.ceil(comments.length / commentsPerPage);
-        const startIndex = (currentPage - 1) * commentsPerPage;
-        const endIndex = startIndex + commentsPerPage;
-        const currentComments = comments.slice(startIndex, endIndex);
+        this.totalPages = Math.ceil(this.comments.length / this.commentsPerPage);
+        const startIndex = (this.currentPage - 1) * this.commentsPerPage;
+        const endIndex = startIndex + this.commentsPerPage;
+        const currentComments = this.comments.slice(startIndex, endIndex);
 
-        // Render current page comments
-        commentsList.innerHTML = currentComments.map(comment => `
+        this.commentsList.innerHTML = currentComments.map(comment => `
           <div class="comment-item">
-            <div class="comment-name">${escapeHtml(comment.name)}</div>
-            <div class="comment-text">${escapeHtml(comment.text)}</div>
-            <div class="comment-time">${formatDate(comment.timestamp)}</div>
+            <div class="comment-name">${this.escapeHtml(comment.name)}</div>
+            <div class="comment-text">${this.escapeHtml(comment.text)}</div>
+            <div class="comment-time">${this.formatDate(comment.timestamp)}</div>
           </div>
         `).join('');
         
-        // Update header with total count
-        const totalComments = comments.length;
+        const totalComments = this.comments.length;
         const commentHeader = document.querySelector('#slide4 .comment-header h4');
         if (commentHeader) {
           commentHeader.textContent = `Ucapan & Doa (${totalComments})`;
         }
 
-        // Update pagination controls
-        updatePaginationControls();
+        this.updatePaginationControls();
       }
 
-      function updatePaginationControls() {
-        if (totalPages <= 1) {
-          paginationControls.classList.remove('visible');
+      updatePaginationControls() {
+        if (this.totalPages <= 1) {
+          this.paginationControls.classList.remove('visible');
           return;
         }
 
-        paginationControls.classList.add('visible');
-        
-        // Update buttons
-        prevPageBtn.disabled = currentPage === 1;
-        nextPageBtn.disabled = currentPage === totalPages;
-        
-        // Update info
-        paginationInfo.textContent = `Halaman ${currentPage} dari ${totalPages}`;
+        this.paginationControls.classList.add('visible');
+        this.prevPageBtn.disabled = this.currentPage === 1;
+        this.nextPageBtn.disabled = this.currentPage === this.totalPages;
+        this.paginationInfo.textContent = `Halaman ${this.currentPage} dari ${this.totalPages}`;
       }
 
-      function goToPage(page) {
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        renderComments();
+      goToPage(page) {
+        if (page < 1 || page > this.totalPages) return;
+        this.currentPage = page;
+        this.renderComments();
       }
 
-      // Pagination event listeners
-      prevPageBtn.addEventListener('click', () => {
-        goToPage(currentPage - 1);
-      });
+      handleCommentSubmit(e) {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('comment-name');
+        const textInput = document.getElementById('comment-text');
+        const submitBtn = document.querySelector('.submit-btn');
+        
+        const name = nameInput.value.trim();
+        const text = textInput.value.trim();
+        
+        if (name && text) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Mengirim...';
+          
+          const newComment = {
+            name: name,
+            text: text,
+            timestamp: Date.now()
+          };
+          
+          this.saveCommentToFirebase(newComment)
+            .then(() => {
+              nameInput.value = '';
+              textInput.value = '';
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Kirim Ucapan';
+              this.currentPage = 1;
+              
+              setTimeout(() => {
+                const commentsSection = document.querySelector('#slide4 .comments-list');
+                if (commentsSection) {
+                  commentsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+              }, 500);
+            })
+            .catch(() => {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Kirim Ucapan';
+            });
+        }
+      }
 
-      nextPageBtn.addEventListener('click', () => {
-        goToPage(currentPage + 1);
-      });
-
-      function escapeHtml(text) {
+      escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
       }
 
-      function formatDate(timestamp) {
+      formatDate(timestamp) {
         const date = new Date(timestamp);
         const now = new Date();
         const diffInMinutes = Math.floor((now - date) / (1000 * 60));
@@ -1423,84 +1442,42 @@
         });
       }
 
-      // Comment form handler dengan Firebase
-      commentForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const nameInput = document.getElementById('comment-name');
-        const textInput = document.getElementById('comment-text');
-        const submitBtn = document.querySelector('.submit-btn');
-        
-        const name = nameInput.value.trim();
-        const text = textInput.value.trim();
-        
-        if (name && text) {
-          // Disable form sementara
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Mengirim...';
+      // ===== NAVIGATION & SLIDER METHODS =====
+      openInvitation() {
+        this.landingPage.style.animation = "fadeOut 0.7s forwards";
+        setTimeout(() => {
+          this.landingPage.style.display = "none";
+          this.slider.style.display = "block";
+          this.applySlideBackgrounds();
+          this.showSlide(0);
           
-          const newComment = {
-            name: name,
-            text: text,
-            timestamp: Date.now()
-          };
-          
-          // Simpan ke Firebase
-          saveCommentToFirebase(newComment)
-            .then(() => {
-              // Reset form setelah berhasil
-              nameInput.value = '';
-              textInput.value = '';
-              
-              // Re-enable form
-              submitBtn.disabled = false;
-              submitBtn.textContent = 'Kirim Ucapan';
-              
-              // Reset ke halaman pertama untuk melihat komentar baru
-              currentPage = 1;
-              
-              // Scroll ke area komentar setelah delay singkat
-              setTimeout(() => {
-                const commentsSection = document.querySelector('#slide4 .comments-list');
-                if (commentsSection) {
-                  commentsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-              }, 500);
-            })
-            .catch(() => {
-              // Re-enable form jika error
-              submitBtn.disabled = false;
-              submitBtn.textContent = 'Kirim Ucapan';
+          const playPromise = this.music.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              this.musicControl.setAttribute("aria-pressed", "true");
+            }).catch((e) => {
+              console.log("Autoplay prevented:", e);
+              this.musicControl.setAttribute("aria-pressed", "false");
             });
-        }
-      });
+          }
 
-      // Auto-slide functions
-      function startAutoSlide() {
-        if (autoSlideEnabled) {
-          clearInterval(autoSlideInterval);
-          autoSlideInterval = setInterval(() => {
-            if (!isTransitioning && slider.style.display === "block") {
-              showSlide(currentSlide + 1);
+          setTimeout(() => {
+            if (this.slides[0].classList.contains("active")) {
+              this.slides[0].classList.add("overlay-visible");
             }
-          }, 11000);
-        }
+          }, 500);
+        }, 700);
       }
 
-      function stopAutoSlide() {
-        clearInterval(autoSlideInterval);
-      }
+      showSlide(index) {
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
+        this.stopAutoSlide();
 
-      // Show slide function
-      function showSlide(index) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        stopAutoSlide();
+        if (index < 0) index = this.slides.length - 1;
+        if (index >= this.slides.length) index = 0;
 
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-
-        slides.forEach((slide) => {
+        this.slides.forEach((slide) => {
           slide.classList.remove("active", "prev", "next");
           if (slide.id === "slide1") slide.classList.remove("overlay-visible");
           if (slide.id === "slide2") {
@@ -1509,25 +1486,24 @@
           if (slide.id === "slide4") slide.classList.remove("overlay-visible");
         });
 
-        const prevIndex = index - 1 < 0 ? slides.length - 1 : index - 1;
-        const nextIndex = index + 1 >= slides.length ? 0 : index + 1;
+        const prevIndex = index - 1 < 0 ? this.slides.length - 1 : index - 1;
+        const nextIndex = index + 1 >= this.slides.length ? 0 : index + 1;
 
-        slides[prevIndex].classList.add("prev");
-        slides[index].classList.add("active");
-        slides[nextIndex].classList.add("next");
+        this.slides[prevIndex].classList.add("prev");
+        this.slides[index].classList.add("active");
+        this.slides[nextIndex].classList.add("next");
 
         setTimeout(() => {
-          isTransitioning = false;
-          handleSlideAnimations(index);
-          startAutoSlide();
+          this.isTransitioning = false;
+          this.handleSlideAnimations(index);
+          this.startAutoSlide();
         }, 1000);
 
-        currentSlide = index;
+        this.currentSlide = index;
       }
 
-      // Handle slide animations
-      function handleSlideAnimations(index) {
-        const slide = slides[index];
+      handleSlideAnimations(index) {
+        const slide = this.slides[index];
 
         switch (slide.id) {
           case "slide1":
@@ -1554,134 +1530,133 @@
         }
       }
 
-      // Initialize everything
-      createFlowerPetals();
-      initGallery();
-      initComments();
-
-      // Open invitation
-      openButton.addEventListener("click", function () {
-        landingPage.style.animation = "fadeOut 0.7s forwards";
-        setTimeout(() => {
-          landingPage.style.display = "none";
-          slider.style.display = "block";
-          showSlide(0);
-          
-          const playPromise = music.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              musicControl.setAttribute("aria-pressed", "true");
-            }).catch((e) => {
-              console.log("Autoplay prevented:", e);
-              musicControl.setAttribute("aria-pressed", "false");
-            });
-          }
-
-          setTimeout(() => {
-            if (slides[0].classList.contains("active")) {
-              slides[0].classList.add("overlay-visible");
+      startAutoSlide() {
+        if (this.autoSlideEnabled) {
+          clearInterval(this.autoSlideInterval);
+          this.autoSlideInterval = setInterval(() => {
+            if (!this.isTransitioning && this.slider.style.display === "block") {
+              this.showSlide(this.currentSlide + 1);
             }
-          }, 500);
-        }, 700);
-      });
-
-      // Navigation
-      prevButton.addEventListener("click", () => showSlide(currentSlide - 1));
-      nextButton.addEventListener("click", () => showSlide(currentSlide + 1));
-
-      // Music control
-      musicControl.addEventListener("click", () => {
-        if (music.paused) {
-          const playPromise = music.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              musicControl.setAttribute("aria-pressed", "true");
-            }).catch((e) => {
-              console.log("Autoplay prevented:", e);
-              musicControl.setAttribute("aria-pressed", "false");
-            });
-          }
-        } else {
-          music.pause();
-          musicControl.setAttribute("aria-pressed", "false");
-        }
-      });
-
-      // Keyboard navigation
-      document.addEventListener("keydown", (e) => {
-        if (slider.style.display === "block") {
-          if (e.key === "ArrowLeft") showSlide(currentSlide - 1);
-          else if (e.key === "ArrowRight") showSlide(currentSlide + 1);
-        }
-      });
-
-      // Touch navigation
-      slider.addEventListener("touchstart", (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
-      slider.addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      }, { passive: true });
-
-      function handleSwipe() {
-        const threshold = 50;
-        if (touchEndX - touchStartX > threshold) {
-          showSlide(currentSlide - 1);
-        } else if (touchStartX - touchEndX > threshold) {
-          showSlide(currentSlide + 1);
+          }, 11000);
         }
       }
 
-      // Window resize handler
-      window.addEventListener('resize', () => {
-        if (photoGrid && window.innerWidth <= 480) {
-          photoGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        } else if (photoGrid && window.innerWidth <= 768) {
-          photoGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(120px, 1fr))';
-        } else if (photoGrid) {
-          photoGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, 1fr))';
-        }
-      });
+      stopAutoSlide() {
+        clearInterval(this.autoSlideInterval);
+      }
 
-      // Orientation change
-      window.addEventListener("orientationchange", () => {
+      // ===== MUSIC CONTROL METHODS =====
+      toggleMusic() {
+        if (this.music.paused) {
+          const playPromise = this.music.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              this.musicControl.setAttribute("aria-pressed", "true");
+            }).catch((e) => {
+              console.log("Autoplay prevented:", e);
+              this.musicControl.setAttribute("aria-pressed", "false");
+            });
+          }
+        } else {
+          this.music.pause();
+          this.musicControl.setAttribute("aria-pressed", "false");
+        }
+      }
+
+      // ===== EVENT HANDLERS =====
+      handleKeyDown(e) {
+        if (this.slider.style.display === "block") {
+          if (e.key === "ArrowLeft") this.showSlide(this.currentSlide - 1);
+          else if (e.key === "ArrowRight") this.showSlide(this.currentSlide + 1);
+          else if (e.key === 'Escape' && this.photoModal.classList.contains('active')) {
+            this.closePhotoModal();
+          }
+        }
+      }
+
+      handleTouchStart(e) {
+        this.touchStartX = e.changedTouches[0].screenX;
+      }
+
+      handleTouchEnd(e) {
+        this.touchEndX = e.changedTouches[0].screenX;
+        this.handleSwipe();
+      }
+
+      handleSwipe() {
+        const threshold = 50;
+        if (this.touchEndX - this.touchStartX > threshold) {
+          this.showSlide(this.currentSlide - 1);
+        } else if (this.touchStartX - this.touchEndX > threshold) {
+          this.showSlide(this.currentSlide + 1);
+        }
+      }
+
+      handleResize() {
+        if (this.photoGrid && window.innerWidth <= 480) {
+          this.photoGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        } else if (this.photoGrid && window.innerWidth <= 768) {
+          this.photoGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(120px, 1fr))';
+        } else if (this.photoGrid) {
+          this.photoGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, 1fr))';
+        }
+      }
+
+      handleOrientationChange() {
         setTimeout(() => {
           const activeSlide = document.querySelector(".slide.active");
           if (activeSlide) {
-            handleSlideAnimations(currentSlide);
+            this.handleSlideAnimations(this.currentSlide);
           }
-          startAutoSlide();
+          this.startAutoSlide();
         }, 300);
-      });
-
-      // Visibility change
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-          if (!music.paused) music.pause();
-          stopAutoSlide();
-        } else {
-          if (musicControl.getAttribute("aria-pressed") === "true") {
-            music.play().catch((e) => console.log("Autoplay prevented on visibility change:", e));
-          }
-          startAutoSlide();
-        }
-      });
-
-      // Performance optimization
-      if ("ontouchstart" in window) {
-        document.body.classList.add("touch-device");
-        document.body.style.overscrollBehavior = "contain";
-        photoGrid.style.touchAction = 'manipulation';
       }
 
-      // Preload images
-      function preloadImages() {
+      handleVisibilityChange() {
+        if (document.hidden) {
+          if (!this.music.paused) this.music.pause();
+          this.stopAutoSlide();
+        } else {
+          if (this.musicControl.getAttribute("aria-pressed") === "true") {
+            this.music.play().catch((e) => console.log("Autoplay prevented on visibility change:", e));
+          }
+          this.startAutoSlide();
+        }
+      }
+
+      handlePopState(e) {
+        if (this.slider.style.display === "block") {
+          this.slider.style.display = "none";
+          this.landingPage.style.display = "flex";
+          this.landingPage.style.animation = "fadeIn 0.7s forwards";
+          this.createFlowerPetals();
+          history.pushState(null, document.title, window.location.href);
+        } else {
+          history.back();
+        }
+      }
+
+      // ===== UTILITY METHODS =====
+      handleURLParameters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get("name");
+
+        if (guestName) {
+          const guestSpan = document.getElementById("guest-name");
+          const nameElement = document.createElement("div");
+          nameElement.className = "guest-name-text";
+          nameElement.textContent = decodeURIComponent(guestName);
+          guestSpan.appendChild(nameElement);
+        }
+
+        history.pushState(null, document.title, window.location.href);
+      }
+
+      preloadImages() {
         const imageUrls = [
           "path_to_your_flower_border.png",
-          ...slideBackgrounds,
-          ...galleryPhotos.slice(0, 4)
+          ...this.slideBackgrounds,
+          ...this.galleryPhotos.slice(0, 4)
         ].filter((url) => url);
 
         imageUrls.forEach((url) => {
@@ -1689,48 +1664,20 @@
           img.src = url;
         });
       }
+    }
 
-      preloadImages();
-
-      // Lazy load audio
-      window.addEventListener("load", () => {
-        setTimeout(() => {
-          music.load();
-        }, 1000);
-      });
-
-      // Prevent context menu
-      document.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        return false;
-      });
-
-      // Handle browser back button
-      window.addEventListener("popstate", function (e) {
-        if (slider.style.display === "block") {
-          slider.style.display = "none";
-          landingPage.style.display = "flex";
-          landingPage.style.animation = "fadeIn 0.7s forwards";
-          createFlowerPetals();
-          history.pushState(null, document.title, window.location.href);
-        } else {
-          history.back();
-        }
-      });
-
-      history.pushState(null, document.title, window.location.href);
-
-      // URL parameter for guest name
-      const urlParams = new URLSearchParams(window.location.search);
-      const guestName = urlParams.get("name");
-
-      if (guestName) {
-        const guestSpan = document.getElementById("guest-name");
-        const nameElement = document.createElement("div");
-        nameElement.className = "guest-name-text";
-        nameElement.textContent = decodeURIComponent(guestName);
-        guestSpan.appendChild(nameElement);
+    // ===== APPLICATION INITIALIZATION =====
+    document.addEventListener("DOMContentLoaded", function () {
+      // Performance optimization for touch devices
+      if ("ontouchstart" in window) {
+        document.body.classList.add("touch-device");
+        document.body.style.overscrollBehavior = "contain";
+        const photoGrid = document.getElementById('photo-grid');
+        if (photoGrid) photoGrid.style.touchAction = 'manipulation';
       }
+
+      // Initialize the wedding invitation application
+      const weddingApp = new WeddingInvitation();
     });
   </script>
 </body>
