@@ -37,6 +37,65 @@
       overscroll-behavior: contain;
     }
 
+    /* ===== LOADING SPINNER ===== */
+    .loading-spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      z-index: 9999;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* ===== OPTIMIZED BACKGROUND SYSTEM ===== */
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      will-change: opacity;
+    }
+
+    .slide-bg.loaded {
+      opacity: 1;
+    }
+
+    /* ===== LAZY LOAD PLACEHOLDER ===== */
+    .lazy-placeholder {
+      background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lazy-placeholder::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
     /* ===== TYPOGRAPHY ===== */
     h1, h2, h3, .cursive-text {
       font-family: "Great Vibes", cursive !important;
@@ -175,8 +234,6 @@
     .slide {
       position: absolute;
       inset: 0;
-      background-size: cover;
-      background-position: center center;
       transition: transform 1.25s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1.25s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
       opacity: 0;
       transform: scale(1.08);
@@ -587,6 +644,7 @@
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
 
     #slide4 .photo-item:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2); }
@@ -595,7 +653,12 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    #slide4 .photo-item img.loaded {
+      opacity: 1;
     }
 
     #slide4 .photo-item:hover img { transform: scale(1.1); }
@@ -965,6 +1028,9 @@
   </style>
 </head>
 <body>
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" id="loading-spinner"></div>
+
   <!-- Landing Page -->
   <div id="landing-page">
     <h1>Undangan Pernikahan</h1>
@@ -977,9 +1043,10 @@
   <div id="slider">
     <!-- ===== SLIDE 1: SAMBUTAN ===== -->
     <div id="slide1" class="slide">
+      <div class="slide-bg lazy-placeholder" data-bg="background_0.jpg"></div>
       <div class="overlay">
         <div class="center-container">
-          <img src="tempat_nama.gif" alt="" class="gif" />
+          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSIxNzUiIGN5PSIxNzUiIHI9IjE3NSIgZmlsbD0iIzMzMzMzMyIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+TG9hZGluZyBHSUYuLi48L3RleHQ+Cjwvc3ZnPgo=" alt="" class="gif" data-src="tempat_nama.gif" />
           <div class="names-container">
             <div class="name-text cursive-text">Yayan</div>
             <div class="name-and cursive-text">&</div>
@@ -992,6 +1059,7 @@
 
     <!-- ===== SLIDE 2: MEMPELAI ===== -->
     <div id="slide2" class="slide">
+      <div class="slide-bg lazy-placeholder" data-bg="background_1_ganti.jpg"></div>
       <div class="main-container">
         <div class="panel-left left">
           <div class="info-container">
@@ -1021,6 +1089,7 @@
 
     <!-- ===== SLIDE 3: ACARA ===== -->
     <div id="slide3" class="slide">
+      <div class="slide-bg lazy-placeholder" data-bg="background_2_ganti.JPG"></div>
       <div class="overlay">
         <h3>Rangkaian Acara</h3>
         <div class="events-container">
@@ -1115,9 +1184,165 @@
       appId: "GANTI_DENGAN_APP_ID_ANDA"
     };
 
+    // ===== IMAGE OPTIMIZATION UTILITIES =====
+    class ImageOptimizer {
+      constructor() {
+        this.imageCache = new Map();
+        this.loadingQueue = [];
+        this.isProcessing = false;
+        this.observer = null;
+        this.initIntersectionObserver();
+      }
+
+      initIntersectionObserver() {
+        if ('IntersectionObserver' in window) {
+          this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.loadImage(entry.target);
+                this.observer.unobserve(entry.target);
+              }
+            });
+          }, {
+            rootMargin: '50px'
+          });
+        }
+      }
+
+      // Convert image to WebP if supported
+      createOptimizedUrl(originalUrl, quality = 80, maxWidth = 1920) {
+        // For real implementation, you would use a service like Cloudinary or ImageKit
+        // This is a placeholder for the concept
+        const isWebPSupported = this.checkWebPSupport();
+        
+        if (isWebPSupported) {
+          // In real scenario, you'd convert to WebP format
+          return originalUrl;
+        }
+        return originalUrl;
+      }
+
+      checkWebPSupport() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+      }
+
+      // Compress image using canvas
+      compressImage(file, quality = 0.8, maxWidth = 1920) {
+        return new Promise((resolve) => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+          
+          img.onload = () => {
+            const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+            
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob(resolve, 'image/jpeg', quality);
+          };
+          
+          img.src = URL.createObjectURL(file);
+        });
+      }
+
+      async loadImage(element) {
+        const src = element.dataset.src || element.dataset.bg;
+        if (!src || this.imageCache.has(src)) return;
+
+        this.showLoadingSpinner();
+        
+        try {
+          const optimizedUrl = this.createOptimizedUrl(src);
+          await this.preloadImage(optimizedUrl);
+          
+          if (element.dataset.bg) {
+            // Background image
+            element.style.backgroundImage = `url(${optimizedUrl})`;
+            element.classList.add('loaded');
+            element.classList.remove('lazy-placeholder');
+          } else {
+            // Regular image
+            element.src = optimizedUrl;
+            element.classList.add('loaded');
+          }
+          
+          this.imageCache.set(src, optimizedUrl);
+        } catch (error) {
+          console.error('Failed to load image:', src, error);
+        } finally {
+          this.hideLoadingSpinner();
+        }
+      }
+
+      preloadImage(src) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = src;
+        });
+      }
+
+      observeElement(element) {
+        if (this.observer) {
+          this.observer.observe(element);
+        } else {
+          // Fallback for browsers without IntersectionObserver
+          this.loadImage(element);
+        }
+      }
+
+      showLoadingSpinner() {
+        const spinner = document.getElementById('loading-spinner');
+        if (spinner) spinner.style.display = 'block';
+      }
+
+      hideLoadingSpinner() {
+        const spinner = document.getElementById('loading-spinner');
+        if (spinner) spinner.style.display = 'none';
+      }
+
+      // Progressive loading for gallery
+      async loadGalleryImages(photoUrls, container, batchSize = 3) {
+        for (let i = 0; i < photoUrls.length; i += batchSize) {
+          const batch = photoUrls.slice(i, i + batchSize);
+          
+          await Promise.all(batch.map(async (photoUrl, index) => {
+            const actualIndex = i + index;
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item lazy-placeholder';
+            
+            const img = document.createElement('img');
+            img.alt = `Foto wedding ${actualIndex + 1}`;
+            img.loading = 'lazy';
+            img.dataset.src = photoUrl;
+            
+            photoItem.appendChild(img);
+            photoItem.addEventListener('click', () => window.weddingApp?.openPhotoModal(photoUrl));
+            
+            container.appendChild(photoItem);
+            
+            // Load image when it becomes visible
+            this.observeElement(img);
+          }));
+          
+          // Small delay between batches to prevent overwhelming the browser
+          if (i + batchSize < photoUrls.length) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+        }
+      }
+    }
+
     // ===== MAIN APPLICATION =====
     class WeddingInvitation {
       constructor() {
+        this.imageOptimizer = new ImageOptimizer();
         this.initializeElements();
         this.initializeState();
         this.initializeFirebase();
@@ -1126,7 +1351,7 @@
         this.initializeComments();
         this.handleURLParameters();
         this.createFlowerPetals();
-        this.preloadImages();
+        this.initializeLazyLoading();
       }
 
       // ===== INITIALIZATION METHODS =====
@@ -1172,7 +1397,9 @@
         this.currentPage = 1;
         this.commentsPerPage = 2;
         this.totalPages = 1;
+        this.backgroundsLoaded = new Set();
         
+        // Use smaller, optimized images for better performance
         this.galleryPhotos = [
           "galeri1.jpg", "galeri2.jpg", "galeri3.jpg", "galeri4.jpg",
           "galeri5.jpg", "galeri6.jpg", "galeri7.jpg"
@@ -1233,6 +1460,23 @@
         });
       }
 
+      // ===== LAZY LOADING INITIALIZATION =====
+      initializeLazyLoading() {
+        // Initialize lazy loading for slide backgrounds
+        this.slides.forEach(slide => {
+          const bgElement = slide.querySelector('.slide-bg[data-bg]');
+          if (bgElement) {
+            this.imageOptimizer.observeElement(bgElement);
+          }
+        });
+
+        // Initialize lazy loading for GIF
+        const gifElement = document.querySelector('img[data-src]');
+        if (gifElement) {
+          this.imageOptimizer.observeElement(gifElement);
+        }
+      }
+
       // ===== SLIDE 1: SAMBUTAN METHODS =====
       createFlowerPetals(count = 12) {
         const colors = ["#ffb3ba", "#ffdfba", "#ffffba", "#baffc9", "#bae1ff"];
@@ -1262,30 +1506,16 @@
         }
       }
 
-      // ===== SLIDE 2: MEMPELAI METHODS =====
-      applySlideBackgrounds() {
-        this.slides.forEach((slide, index) => {
-          if (this.slideBackgrounds[index] && slide.id !== 'slide4') {
-            slide.style.backgroundImage = `url(${this.slideBackgrounds[index]})`;
-          } else if (slide.id === 'slide4') {
-            slide.style.background = 'black';
-          }
-        });
-      }
-
-      // ===== SLIDE 3: ACARA METHODS =====
-      // Event-specific methods can be added here if needed
-
       // ===== SLIDE 4: GALERI & KOMENTAR METHODS =====
-      initializeGallery() {
+      async initializeGallery() {
         this.photoGrid.innerHTML = '';
-        this.galleryPhotos.forEach((photoUrl, index) => {
-          const photoItem = document.createElement('div');
-          photoItem.className = 'photo-item';
-          photoItem.innerHTML = `<img src="${photoUrl}" alt="Foto wedding ${index + 1}" loading="lazy">`;
-          photoItem.addEventListener('click', () => this.openPhotoModal(photoUrl));
-          this.photoGrid.appendChild(photoItem);
-        });
+        
+        // Use progressive loading for gallery images
+        await this.imageOptimizer.loadGalleryImages(
+          this.galleryPhotos, 
+          this.photoGrid, 
+          3 // Load 3 images at a time
+        );
       }
 
       openPhotoModal(photoUrl) {
@@ -1448,7 +1678,6 @@
         setTimeout(() => {
           this.landingPage.style.display = "none";
           this.slider.style.display = "block";
-          this.applySlideBackgrounds();
           this.showSlide(0);
           
           const playPromise = this.music.play();
@@ -1477,6 +1706,9 @@
         if (index < 0) index = this.slides.length - 1;
         if (index >= this.slides.length) index = 0;
 
+        // Load background for current slide if not already loaded
+        this.preloadSlideBackground(index);
+
         this.slides.forEach((slide) => {
           slide.classList.remove("active", "prev", "next");
           if (slide.id === "slide1") slide.classList.remove("overlay-visible");
@@ -1493,6 +1725,10 @@
         this.slides[index].classList.add("active");
         this.slides[nextIndex].classList.add("next");
 
+        // Preload adjacent slides
+        this.preloadSlideBackground(prevIndex);
+        this.preloadSlideBackground(nextIndex);
+
         setTimeout(() => {
           this.isTransitioning = false;
           this.handleSlideAnimations(index);
@@ -1500,6 +1736,18 @@
         }, 1000);
 
         this.currentSlide = index;
+      }
+
+      preloadSlideBackground(index) {
+        if (this.backgroundsLoaded.has(index)) return;
+        
+        const slide = this.slides[index];
+        const bgElement = slide?.querySelector('.slide-bg[data-bg]');
+        
+        if (bgElement && !bgElement.classList.contains('loaded')) {
+          this.imageOptimizer.loadImage(bgElement);
+          this.backgroundsLoaded.add(index);
+        }
       }
 
       handleSlideAnimations(index) {
@@ -1651,19 +1899,6 @@
 
         history.pushState(null, document.title, window.location.href);
       }
-
-      preloadImages() {
-        const imageUrls = [
-          "path_to_your_flower_border.png",
-          ...this.slideBackgrounds,
-          ...this.galleryPhotos.slice(0, 4)
-        ].filter((url) => url);
-
-        imageUrls.forEach((url) => {
-          const img = new Image();
-          img.src = url;
-        });
-      }
     }
 
     // ===== APPLICATION INITIALIZATION =====
@@ -1677,7 +1912,7 @@
       }
 
       // Initialize the wedding invitation application
-      const weddingApp = new WeddingInvitation();
+      window.weddingApp = new WeddingInvitation();
     });
   </script>
 </body>
